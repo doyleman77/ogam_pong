@@ -1,1 +1,12 @@
-#include "paddle.hpp"
+#include "src/paddle.hpp"
+
+Paddle::Paddle()
+{
+
+}
+
+Paddle::~Paddle()
+{
+
+}
+

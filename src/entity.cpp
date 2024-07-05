@@ -6,6 +6,7 @@ Entity::Entity()
 	texture = NULL;
 	x_accel = y_accel = 0.f;
 	x_pos = y_pos = 0;
+	alive = true;
 }
 
 Entity::~Entity()
