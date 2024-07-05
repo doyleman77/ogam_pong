@@ -38,6 +38,9 @@ void Game::run(int fps)
                 continue;
             }
         }
+        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+        SDL_RenderClear(renderer);
+        SDL_RenderPresent(renderer);
         SDL_Delay(delay_milliseconds);
     }
 }
