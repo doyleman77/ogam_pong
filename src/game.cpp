@@ -21,26 +21,52 @@ Game::~Game()
     SDL_Quit();
 }
 
+void Game::input()
+{
+    while (SDL_PollEvent(&ev))
+    {
+        if (ev.type == SDL_QUIT) running = false;
+        switch (ev.key.keysym.sym)
+        {
+        case SDLK_ESCAPE:
+            running = false;
+            continue;
+        }
+    }
+}
+
+void Game::draw()
+{
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+    SDL_RenderClear(renderer);
+
+    for (auto i : entities)
+    {
+        i->draw(renderer);
+    }
+    SDL_RenderPresent(renderer);
+}
+
+void Game::update(int dt)
+{
+    for (auto i : entities)
+    {
+        i->update(dt);
+    }
+}
+
 void Game::run(int fps)
 {
     // TODO: clamp FPS probably within a range?
     running = true;
     int delay_milliseconds = 1000/fps;
+    int last_time = SDL_GetTicks();
     while (running)
     {
-        while(SDL_PollEvent(&ev))
-        {
-            if(ev.type == SDL_QUIT) running = false;
-            switch(ev.key.keysym.sym)
-            {
-                case SDLK_ESCAPE:
-                running = false;
-                continue;
-            }
-        }
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-        SDL_RenderClear(renderer);
-        SDL_RenderPresent(renderer);
+        int current_time = last_time;
+        input();
+        draw();
+        //update(); TODO: calculate frametime and pass difference into update
         SDL_Delay(delay_milliseconds);
     }
 }

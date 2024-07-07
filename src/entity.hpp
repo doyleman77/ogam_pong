@@ -1,5 +1,4 @@
-#ifndef ENTITY_HPP
-#define ENTITY_HPP
+#pragma once
 
 #ifndef _WIN32
 #include <SDL2/SDL.h>
@@ -18,11 +17,11 @@ class Entity
 public:
     Entity();
     virtual ~Entity();
-    void update(float dt);
-    void draw(SDL_Renderer* renderer);
+    virtual void update(int dt);
+    virtual void draw(SDL_Renderer* renderer);
+    virtual void move(int x, int y);
     bool register_texture(SDL_Texture* tex);
     void register_rect(SDL_Rect& rect);
-    void move(int x, int y);
 
 private:
     SDL_Texture* texture;
@@ -32,5 +31,3 @@ private:
     float x_accel, y_accel;
     bool alive;
 };
-
-#endif

@@ -1,5 +1,4 @@
-#ifndef GAME_HPP
-#define GAME_HPP
+#pragma once
 
 #ifndef _WIN32
 #include <SDL2/SDL.h>
@@ -13,6 +12,7 @@
 
 #include <string>
 #include "texture_manager.hpp"
+#include "entity.hpp"
 
 class Game
 {
@@ -22,13 +22,16 @@ class Game
         void run(int fps);
         
     private:
+        void update(int dt);
+        void draw();
+        void input();
         SDL_Window* window;
         SDL_Renderer* renderer;
         SDL_Event ev;
 
         Texture_Manager texture_manager;
+
+        std::vector<Entity*> entities;
         bool running;
         int fps;
 };
-
-#endif

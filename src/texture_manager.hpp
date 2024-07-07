@@ -1,5 +1,4 @@
-#ifndef TEXTURE_MANAGER_HPP
-#define TEXTURE_MANAGER_HPP
+#pragma once
 
 #ifndef _WIN32
 #include <SDL2/SDL.h>
@@ -24,5 +23,3 @@ class Texture_Manager
     private:
         std::unordered_map<std::string, SDL_Texture*> textures;
 };
-
-#endif

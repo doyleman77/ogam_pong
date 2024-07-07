@@ -1,4 +1,4 @@
-#include "src/paddle.hpp"
+#include "paddle.hpp"
 
 Paddle::Paddle()
 {

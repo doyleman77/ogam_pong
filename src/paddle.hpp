@@ -1,6 +1,6 @@
-#ifndef PADDLE_HPP
-#define PADDLE_HPP
-#include "src/entity.hpp"
+#pragma once
+
+#include "entity.hpp"
 
 class Paddle : public Entity
 {
@@ -10,4 +10,3 @@ public:
 private:
 	SDL_Color color;
 };
-#endif
