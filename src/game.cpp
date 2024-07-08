@@ -54,7 +54,29 @@ void Game::draw()
     {
         i->draw(renderer);
     }
+    draw_net();
     SDL_RenderPresent(renderer);
+}
+
+void Game::draw_net()
+{
+    int x_pos = 0;
+    int y_pos = 0;
+    int win_height = 0;
+    SDL_GetWindowSize(window, &x_pos, &win_height);
+    x_pos /= 2;
+    while (y_pos < win_height)
+    {
+        SDL_Rect net_rect;
+        net_rect.w = 2;
+        net_rect.h = 12;
+        net_rect.x = x_pos - (net_rect.w / 2);
+        net_rect.y = y_pos;
+        SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0); // white
+        SDL_RenderFillRect(renderer, &net_rect);
+        y_pos += 20; // temporary value
+    }
+
 }
 
 void Game::update(int dt)

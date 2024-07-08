@@ -25,6 +25,8 @@ class Game
         void update(int dt);
         void draw();
         void input();
+        void draw_net();
+
         SDL_Window* window;
         SDL_Renderer* renderer;
         SDL_Event ev;

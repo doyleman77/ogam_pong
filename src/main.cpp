@@ -17,7 +17,7 @@ using namespace std;
 
 int main(int argc, char* args[])
 {
-    Game game("Pong", 640, 640);
+    Game game("Pong", 640, 480);
     game.run(60);
     return 0;
 }
