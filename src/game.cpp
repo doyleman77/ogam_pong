@@ -11,6 +11,16 @@ fps(0), running(false)
     // TODO:check for failing to create window and renderer
     window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED);
+
+    texture_manager.get_texture("paddle", renderer);
+    texture_manager.get_texture("ball", renderer);
+
+    Entity* paddle_one = new Entity(); // needs to be a Paddle()
+    paddle_one->register_texture(texture_manager.get_texture("paddle", renderer));
+    entities.push_back(paddle_one);
+    Entity* paddle_two = new Entity(); // needs to be a Paddle()
+    paddle_two->register_texture(texture_manager.get_texture("paddle", renderer));
+    entities.push_back(paddle_two);
 }
 
 Game::~Game()
