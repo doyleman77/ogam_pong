@@ -28,7 +28,7 @@ SDL_Texture* Texture_Manager::get_texture(std::string filename, SDL_Renderer* re
         textures.insert({ filename, temp_texture });
         
         SDL_FreeSurface(loaded_surface);
-        SDL_DestroyTexture(temp_texture);
+        //SDL_DestroyTexture(temp_texture);
     }
     return textures.at(filename);
 }

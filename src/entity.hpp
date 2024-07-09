@@ -20,6 +20,11 @@ public:
     virtual void update(int dt);
     virtual void draw(SDL_Renderer* renderer);
     virtual void move(int x, int y);
+
+    void set_size(int w, int h);
+    void stretch_width(int w);
+    void stretch_height(int h);
+
     bool register_texture(SDL_Texture* tex);
     void register_rect(SDL_Rect& rect);
 

@@ -44,7 +44,7 @@ bool Entity::register_texture(SDL_Texture* tex)
 	this->texture = tex;
 	if (this->texture != NULL)
 	{
-		collision_box.w = SDL_QueryTexture(texture, NULL, NULL, &collision_box.w, &collision_box.h);
+		SDL_QueryTexture(tex, NULL, NULL, &collision_box.w, &collision_box.h);
 		return true;
 	}
 	else
@@ -56,4 +56,20 @@ bool Entity::register_texture(SDL_Texture* tex)
 void Entity::register_rect(SDL_Rect& rect)
 {
 	collision_box = rect;
+}
+
+void Entity::set_size(int w, int h)
+{
+	collision_box.w = w;
+	collision_box.h = h;
+}
+
+void Entity::stretch_width(float width)
+{
+	collision_box.w *= width;
+}
+
+void Entity::stretch_height(float height)
+{
+	collision_box.h *= height;
 }

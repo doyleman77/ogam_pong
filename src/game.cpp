@@ -17,9 +17,11 @@ fps(0), running(false)
 
     Entity* paddle_one = new Entity(); // needs to be a Paddle()
     paddle_one->register_texture(texture_manager.get_texture("paddle", renderer));
+    paddle_one->move(10, height / 2);
     entities.push_back(paddle_one);
     Entity* paddle_two = new Entity(); // needs to be a Paddle()
     paddle_two->register_texture(texture_manager.get_texture("paddle", renderer));
+    paddle_two->move(width - 20, height / 2);
     entities.push_back(paddle_two);
 }
 
@@ -76,7 +78,6 @@ void Game::draw_net()
         SDL_RenderFillRect(renderer, &net_rect);
         y_pos += 20; // temporary value
     }
-
 }
 
 void Game::update(int dt)
