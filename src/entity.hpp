@@ -28,6 +28,8 @@ public:
     bool register_texture(SDL_Texture* tex);
     void register_rect(SDL_Rect& rect);
 
+    int get_width();
+    int get_height();
 private:
     SDL_Texture* texture;
     SDL_Rect collision_box;

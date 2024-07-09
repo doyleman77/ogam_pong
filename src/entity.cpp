@@ -73,3 +73,13 @@ void Entity::stretch_height(float height)
 {
 	collision_box.h *= height;
 }
+
+int Entity::get_height()
+{
+	return collision_box.h;
+}
+
+int Entity::get_width()
+{
+	return collision_box.w;
+}

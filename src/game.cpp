@@ -17,14 +17,14 @@ fps(0), running(false)
 
     Entity* paddle_one = new Entity(); // needs to be a Paddle()
     paddle_one->register_texture(texture_manager.get_texture("paddle"));
-    paddle_one->move(10, (height / 2) - 48);
     paddle_one->stretch_height(4);
+    paddle_one->move(10, (height / 2) - (paddle_one->get_height() / 2));
     entities.push_back(paddle_one);
 
     Entity* paddle_two = new Entity(); // needs to be a Paddle()
     paddle_two->register_texture(texture_manager.get_texture("paddle"));
-    paddle_two->move(width - 20, (height / 2) - 48);
-    paddle_two->stretch_height(4);;
+    paddle_two->stretch_height(4);
+    paddle_two->move(width - paddle_two->get_width() - 10, (height / 2) - (paddle_two->get_height() / 2));
     entities.push_back(paddle_two);
 }
 
