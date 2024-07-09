@@ -22,8 +22,8 @@ public:
     virtual void move(int x, int y);
 
     void set_size(int w, int h);
-    void stretch_width(int w);
-    void stretch_height(int h);
+    void stretch_width(float w);
+    void stretch_height(float h);
 
     bool register_texture(SDL_Texture* tex);
     void register_rect(SDL_Rect& rect);

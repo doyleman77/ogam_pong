@@ -18,8 +18,9 @@ class Texture_Manager
 {
     public:
     //Texture_Manager();
-    //~Texture_Manager();
-    SDL_Texture* get_texture(std::string filename, SDL_Renderer* renderer);
+    ~Texture_Manager();
+    SDL_Texture* get_texture(std::string filename);
+    bool load_texture(std::string filename, SDL_Renderer* renderer);
     private:
         std::unordered_map<std::string, SDL_Texture*> textures;
 };

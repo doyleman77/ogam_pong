@@ -12,16 +12,19 @@ fps(0), running(false)
     window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED);
 
-    texture_manager.get_texture("paddle", renderer);
-    texture_manager.get_texture("ball", renderer);
+    texture_manager.load_texture("paddle", renderer);
+    texture_manager.load_texture("ball", renderer);
 
     Entity* paddle_one = new Entity(); // needs to be a Paddle()
-    paddle_one->register_texture(texture_manager.get_texture("paddle", renderer));
-    paddle_one->move(10, height / 2);
+    paddle_one->register_texture(texture_manager.get_texture("paddle"));
+    paddle_one->move(10, (height / 2) - 48);
+    paddle_one->stretch_height(4);
     entities.push_back(paddle_one);
+
     Entity* paddle_two = new Entity(); // needs to be a Paddle()
-    paddle_two->register_texture(texture_manager.get_texture("paddle", renderer));
-    paddle_two->move(width - 20, height / 2);
+    paddle_two->register_texture(texture_manager.get_texture("paddle"));
+    paddle_two->move(width - 20, (height / 2) - 48);
+    paddle_two->stretch_height(4);;
     entities.push_back(paddle_two);
 }
 
