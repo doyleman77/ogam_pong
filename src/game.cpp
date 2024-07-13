@@ -1,9 +1,12 @@
 #include "game.hpp"
 #include <string>
 
-Game::Game(std::string title, int width, int height) :
-fps(0), running(false)
+Game::Game(std::string title, int width, int height)
 {
+    fps = 0;
+    running = false;
+    up_key = down_key = space_key = false;
+
     // TODO: check for failing to init SDL and IMG
     SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_EVENTS);
     IMG_Init(IMG_INIT_PNG);
@@ -12,20 +15,13 @@ fps(0), running(false)
     window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, SDL_WINDOW_SHOWN);
     renderer = SDL_CreateRenderer(window, 0, SDL_RENDERER_ACCELERATED);
 
-    texture_manager.load_texture("paddle", renderer);
+    //texture_manager.load_texture("paddle", renderer);
     texture_manager.load_texture("ball", renderer);
 
-    Entity* paddle_one = new Entity(); // needs to be a Paddle()
-    paddle_one->register_texture(texture_manager.get_texture("paddle"));
-    paddle_one->stretch_height(4);
-    paddle_one->move(10, (height / 2) - (paddle_one->get_height() / 2));
-    entities.push_back(paddle_one);
-
-    Entity* paddle_two = new Entity(); // needs to be a Paddle()
-    paddle_two->register_texture(texture_manager.get_texture("paddle"));
-    paddle_two->stretch_height(4);
-    paddle_two->move(width - paddle_two->get_width() - 10, (height / 2) - (paddle_two->get_height() / 2));
-    entities.push_back(paddle_two);
+    player.set_size(8, 64);
+    SDL_Color c = SDL_Color{ 255, 0, 0, 255 };
+    player.set_color(c);
+    player.move(width - player.get_width() - 10, (height / 2) - (player.get_height() / 2));
 }
 
 Game::~Game()
@@ -41,12 +37,35 @@ void Game::input()
     while (SDL_PollEvent(&ev))
     {
         if (ev.type == SDL_QUIT) running = false;
-        switch (ev.key.keysym.sym)
+
+        else if (ev.type == SDL_KEYDOWN)
         {
-        case SDLK_ESCAPE:
-            running = false;
-            continue;
+            switch (ev.key.keysym.sym)
+            {
+            case SDLK_ESCAPE:
+                running = false;
+                continue;
+            case SDLK_UP:
+                up_key = true;
+                continue;
+            case SDLK_DOWN:
+                down_key = true;
+                continue;
+            }
         }
+        else if (ev.type == SDL_KEYUP)
+        {
+            switch (ev.key.keysym.sym)
+            {
+            case SDLK_UP:
+                up_key = false;
+                continue;
+            case SDLK_DOWN:
+                down_key = false;
+                continue;
+            }
+        }
+
     }
 }
 
@@ -59,6 +78,7 @@ void Game::draw()
     {
         i->draw(renderer);
     }
+    player.draw(renderer);
     draw_net();
     SDL_RenderPresent(renderer);
 }
@@ -85,10 +105,20 @@ void Game::draw_net()
 
 void Game::update(int dt)
 {
+    if (up_key) player.move(player.get_xpos(), player.get_ypos() - 1);
+    else if (down_key) player.move(player.get_xpos(), player.get_ypos() + 1);
     for (auto i : entities)
     {
         i->update(dt);
     }
+
+    //paddle locking
+    int window_height, window_width;
+    SDL_GetWindowSize(window, &window_width, &window_height);
+    if (player.get_height() + player.get_ypos() > window_height)
+        player.move(player.get_xpos(), window_height - player.get_height());
+    else if (player.get_ypos() < 0)
+        player.move(player.get_xpos(), 0);
 }
 
 void Game::run(int fps)
@@ -102,7 +132,7 @@ void Game::run(int fps)
         int current_time = last_time;
         input();
         draw();
-        //update(); TODO: calculate frametime and pass difference into update
+        update(0); //TODO: calculate frametime and pass difference into update
         SDL_Delay(delay_milliseconds);
     }
 }

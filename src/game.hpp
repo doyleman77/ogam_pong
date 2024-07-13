@@ -13,6 +13,7 @@
 #include <string>
 #include "texture_manager.hpp"
 #include "entity.hpp"
+#include "paddle.hpp"
 
 class Game
 {
@@ -34,6 +35,10 @@ class Game
         Texture_Manager texture_manager;
 
         std::vector<Entity*> entities;
+
+        Paddle player;
+        Paddle bot;
+        bool down_key, up_key, space_key;
         bool running;
         int fps;
 };

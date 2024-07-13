@@ -14,17 +14,29 @@ Entity::~Entity()
 
 }
 
-void Entity::update(int dt)
+void Entity::update(float dt)
 {
 	if (not alive) return;
+
 }
 
-void Entity::move(int x, int y)
+void Entity::move(float x, float y)
 {
 	if (not alive) return;
 
+	x_pos += x;
+	y_pos += y;
+
+	collision_box.x = static_cast<int>(x_pos);
+	collision_box.y = static_cast<int>(y_pos);
+}
+
+void Entity::set_position(int x, int y)
+{
 	collision_box.x = x;
 	collision_box.y = y;
+	x_pos = collision_box.x;
+	y_pos = collision_box.y;
 }
 
 void Entity::draw(SDL_Renderer* renderer)
@@ -82,4 +94,14 @@ int Entity::get_height()
 int Entity::get_width()
 {
 	return collision_box.w;
+}
+
+int Entity::get_xpos()
+{
+	return collision_box.x;
+}
+
+int Entity::get_ypos()
+{
+	return collision_box.y;
 }
