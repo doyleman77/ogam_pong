@@ -21,7 +21,7 @@ Game::Game(std::string title, int width, int height)
     player.set_size(8, 64);
     SDL_Color c = SDL_Color{ 255, 0, 0, 255 };
     player.set_color(c);
-    player.move(width - player.get_width() - 10, (height / 2) - (player.get_height() / 2));
+    player.set_position(width - player.get_width() - 10, (height / 2) - (player.get_height() / 2));
 }
 
 Game::~Game()
@@ -105,8 +105,8 @@ void Game::draw_net()
 
 void Game::update(int dt)
 {
-    if (up_key) player.move(player.get_xpos(), player.get_ypos() - 1);
-    else if (down_key) player.move(player.get_xpos(), player.get_ypos() + 1);
+    if (up_key) player.move(0, -1);
+    else if (down_key) player.move(0, 1);
     for (auto i : entities)
     {
         i->update(dt);
@@ -116,23 +116,24 @@ void Game::update(int dt)
     int window_height, window_width;
     SDL_GetWindowSize(window, &window_width, &window_height);
     if (player.get_height() + player.get_ypos() > window_height)
-        player.move(player.get_xpos(), window_height - player.get_height());
+        player.set_position(player.get_xpos(), window_height - player.get_height());
     else if (player.get_ypos() < 0)
-        player.move(player.get_xpos(), 0);
+        player.set_position(player.get_xpos(), 0);
 }
 
 void Game::run(int fps)
 {
     // TODO: clamp FPS probably within a range?
     running = true;
-    int delay_milliseconds = 1000/fps;
-    int last_time = SDL_GetTicks();
+    float delay_milliseconds = 1000/fps;
+    
     while (running)
     {
-        int current_time = last_time;
+        int last_time = SDL_GetTicks();
         input();
         draw();
         update(0); //TODO: calculate frametime and pass difference into update
         SDL_Delay(delay_milliseconds);
+        int frame_time = SDL_GetTicks() - last_time;
     }
 }
